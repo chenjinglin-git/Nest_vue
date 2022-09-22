@@ -33,6 +33,14 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/link/LinkList.vue')
       }
     ]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login/LoginIndex.vue'),
+    meta: {
+      isLogin: true
+    }
   }
 ]
 
@@ -41,4 +49,11 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  if (!to.meta.isLogin && !token) {
+    next('/login')
+  }
+  next()
+})
 export default router

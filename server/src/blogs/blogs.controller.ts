@@ -1,5 +1,13 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { Blog } from 'libs/db/Entitys/blog.entity';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { BlogsService } from './blogs.service';
 
 @Controller('blogs')
@@ -7,6 +15,7 @@ export class BlogsController {
   constructor(private readonly BlogsService: BlogsService) {}
 
   @Get()
+  @UseGuards(AuthGuard('jwt'))
   async findAll(@Query() query) {
     return await this.BlogsService.findAll(query);
   }

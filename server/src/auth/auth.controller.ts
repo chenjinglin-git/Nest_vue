@@ -13,6 +13,18 @@ export class AuthController {
   @Post('register')
   async register(@Body() body: AdminUser) {
     body.adminpass = hashSync(body.adminpass);
+    const user = await this.datasourse.manager
+      .createQueryBuilder(AdminUser, 'adminuser')
+      .where({
+        adminuser: body.adminuser,
+      })
+      .getOne();
+    if (user) {
+      return {
+        msg: '用户已被注册',
+      };
+    }
+
     const data = await this.datasourse.manager
       .createQueryBuilder()
       .insert()

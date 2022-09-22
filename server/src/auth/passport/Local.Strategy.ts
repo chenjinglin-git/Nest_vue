@@ -1,7 +1,7 @@
 import { Strategy, IStrategyOptions } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { AdminUser } from 'libs/db/Entitys/Adminuser.entity';
-import { BadGatewayException } from '@nestjs/common';
+import { BadGatewayException, UnauthorizedException } from '@nestjs/common';
 import { compareSync } from 'bcryptjs';
 import dataSource from 'libs/db/dataSource';
 
@@ -21,10 +21,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       .addSelect('adminuser.adminpass')
       .getOne();
     if (!data) {
-      throw new BadGatewayException('用户名或密码错误！');
+      throw new UnauthorizedException('用户名或密码错误！');
     }
     if (!compareSync(password, data.adminpass)) {
-      throw new BadGatewayException('用户名或密码错误！');
+      throw new UnauthorizedException('用户名或密码错误！');
     }
     delete data.adminpass;
     return data;

@@ -8,7 +8,7 @@
             <template #title>
               <span>
                 <component :is="item.icon"></component>
-                <span>{{ item.title }}}</span>
+                <span>{{ item.title }}</span>
               </span>
             </template>
             <a-menu-item v-for="itemtags in item.children" :key="itemtags.title">

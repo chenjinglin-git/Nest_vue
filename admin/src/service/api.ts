@@ -1,9 +1,10 @@
-// import api from '@/utils/axios'
-
 export const Tags = `/tags`
 export const TagDelete = '/tags/delete'
 export const TagUpdate = '/tags/update'
 export const upload = '/upload'
+
+export const Login = '/auth/login'
+export const FindUser = '/auth/findone'
 
 export const Blog = '/blogs'
 export const BlogsDelete = '/blogs/delete'
